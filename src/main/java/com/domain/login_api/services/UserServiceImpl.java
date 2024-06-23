@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.domain.login_api.models.User;
+import com.domain.login_api.models.dto.UserTokenDTO;
 import com.domain.login_api.repository.UserRepository;
 import com.domain.login_api.security.JwtUtil;
 
@@ -28,21 +29,33 @@ public class UserServiceImpl implements UserService {
         }
 
         User newUser = new User(username, password);
-
-        // user.setPassword(passwordEncoder.encode(user.getPassword()));
+        // newUser.setPassword(passwordEncoder.encode(password));
+        
         return userRepository.save(newUser);
     }
 
     @Override
-    public Optional<String> loginUser(String username, String password) {
+    public Optional<UserTokenDTO> loginUser(String username, String password) {
         Optional<User> userOptional = userRepository.findByUsername(username);
 
-        // if (userOptiona?l.isPresent() && passwordEncoder.matches(password, userOptional.get().getPassword())) {
-        //     return userOptional;
+        // if (userOptional.isPresent() && passwordEncoder.matches(password, userOptional.get().getPassword())) {
+        //     String token = jwtUtil.generateToken(username);
+
+        //     UserTokenDTO userTokenDTO = new UserTokenDTO();
+        //     userTokenDTO.setUsername(username);
+        //     userTokenDTO.setToken(token);
+    
+        //     return Optional.of(userTokenDTO);
         // }
 
         if (userOptional.isPresent() && userOptional.get().getPassword().equals(password)) {
-            return Optional.of(jwtUtil.generateToken(username));
+            String token = jwtUtil.generateToken(username);
+
+            UserTokenDTO userTokenDTO = new UserTokenDTO();
+            userTokenDTO.setUsername(username);
+            userTokenDTO.setToken(token);
+    
+            return Optional.of(userTokenDTO);
         }
 
         return Optional.empty();
