@@ -2,13 +2,14 @@ package com.domain.login_api.models;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
 @Entity
@@ -16,11 +17,11 @@ import jakarta.persistence.Table;
 public class User implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)
-    private UUID id;
+    private Long id;
 
-    @Column(length = 100, nullable = false)
+    @Column(length = 100, nullable = false, unique = true)
     private String username;
 
     @Column(length = 255, nullable = false)
@@ -32,19 +33,19 @@ public class User implements Serializable {
     @Column(name="updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    public User(UUID id, String username, String password, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        this.id = id;
+    // Default constructor (required by JPA)
+    public User() {}
+
+    public User(String username, String password) {
         this.username = username;
         this.password = password;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
     }
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -80,12 +81,14 @@ public class User implements Serializable {
         this.updatedAt = updatedAt;
     }
 
+    @PrePersist
     protected void onCreate() {
-        createdAt = LocalDateTime.now();
-        updatedAt = LocalDateTime.now();
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
     }
 
+    @PreUpdate
     protected void onUpdate() {
-        updatedAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
     }
 }
