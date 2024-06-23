@@ -1,4 +1,4 @@
-package com.domain.login_api.controllers.dto;
+package com.domain.login_api.models.dto;
 
 public class UserDTO {
 

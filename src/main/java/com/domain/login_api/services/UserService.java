@@ -7,5 +7,5 @@ import com.domain.login_api.models.User;
 public interface UserService {
     User registerUser(String username, String password);
 
-    Optional<User> loginUser(String username, String password);
+    Optional<String> loginUser(String username, String password);
 }
