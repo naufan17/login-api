@@ -33,7 +33,6 @@ public class User implements Serializable {
     @Column(name="updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    // Default constructor (required by JPA)
     public User() {}
 
     public User(String username, String password) {

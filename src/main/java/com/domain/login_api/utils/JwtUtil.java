@@ -1,4 +1,4 @@
-package com.domain.login_api.security;
+package com.domain.login_api.utils;
 
 import java.util.Date;
 import java.util.HashMap;

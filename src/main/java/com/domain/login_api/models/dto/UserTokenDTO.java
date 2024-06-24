@@ -1,6 +1,7 @@
 package com.domain.login_api.models.dto;
 
 public class UserTokenDTO {
+
     private String username;
     private String token;
 
