@@ -1,8 +1,13 @@
-package com.domain.login_api.models.dto;
+package com.domain.login_api.dto;
 
-public class UserDTO {
+import jakarta.validation.constraints.NotEmpty;
 
+public class RequestUserDTO {
+
+    @NotEmpty(message = "Username is required")
     private String username;
+
+    @NotEmpty(message = "Password is required")
     private String password;
 
     public String getUsername() {

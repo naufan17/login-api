@@ -2,11 +2,11 @@ package com.domain.login_api.services;
 
 import java.util.Optional;
 
+import com.domain.login_api.dto.RequestUserDTO;
 import com.domain.login_api.models.User;
-import com.domain.login_api.models.dto.UserTokenDTO;
 
 public interface UserService {
-    User registerUser(String username, String password);
+    User registerUser(RequestUserDTO requestUserData);
 
-    Optional<UserTokenDTO> loginUser(String username, String password);
+    Optional<String> loginUser(RequestUserDTO requestUserData);
 }
